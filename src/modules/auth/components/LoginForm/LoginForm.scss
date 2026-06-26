@@ -1,0 +1,188 @@
+@use "../../../../styles/abstracts/variables" as vars;
+@use "../../../../styles/abstracts/mixins" as mixins;
+
+.login-form {
+  width: 100%;
+  max-width: 447px;
+  box-sizing: border-box;
+
+  &__logo-container {
+    display: none;
+    margin-bottom: 40px;
+
+    @include mixins.respond-to(mobile) {
+      display: block;
+    }
+  }
+
+  &__mobile-logo {
+    height: 30px;
+    width: auto;
+    display: block;
+  }
+
+  &__header {
+    margin-bottom: 50px;
+
+    @include mixins.respond-to(mobile) {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__title {
+    font-family: vars.$font-primary;
+    font-size: 40px;
+    font-weight: 700;
+    color: vars.$color-primary;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+
+    @include mixins.respond-to(mobile) {
+      font-size: 30px;
+    }
+  }
+
+  &__subtitle {
+    font-family: vars.$font-primary;
+    font-size: 20px;
+    font-weight: 400;
+    color: vars.$color-secondary;
+    margin: 0;
+
+    @include mixins.respond-to(mobile) {
+      font-size: 16px;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 24px;
+
+    &--password {
+      .login-form__input {
+        padding-right: 70px;
+      }
+    }
+  }
+
+  &__label {
+    // Visually hidden — accessible to screen readers, invisible in the UI
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  &__input {
+    width: 100%;
+    height: 50px;
+    background-color: vars.$color-white;
+    border: 1px solid rgba(84, 95, 125, 0.15);
+    border-radius: 5px;
+    padding: 0 16px;
+    font-family: vars.$font-primary;
+    font-size: 15px;
+    color: vars.$color-primary;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: vars.$color-secondary;
+      opacity: 0.45;
+    }
+
+    &:focus {
+      border-color: vars.$color-active;
+      box-shadow: 0 0 0 3px rgba(57, 205, 204, 0.1);
+    }
+
+    &[aria-invalid="true"] {
+      border-color: #e13535;
+    }
+  }
+
+  &__password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: vars.$font-secondary;
+    font-size: 12px;
+    font-weight: 600;
+    color: vars.$color-active;
+    letter-spacing: 0.08em;
+    padding: 4px;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  &__actions {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    display: flex;
+  }
+
+  &__forgot-link {
+    font-family: vars.$font-secondary;
+    font-size: 12px;
+    font-weight: 600;
+    color: vars.$color-active;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  &__submit-btn {
+    width: 100%;
+    height: 50px;
+    background-color: vars.$color-active;
+    color: vars.$color-white;
+    border: none;
+    border-radius: 5px;
+    font-family: vars.$font-primary;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    &:hover:not(:disabled) {
+      background-color: #2eb1b0;
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    &:disabled {
+      background-color: rgba(57, 205, 204, 0.45);
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}

@@ -1,10 +1,19 @@
+import React from 'react';
+import LoginBanner from '../components/LoginBanner/LoginBanner';
+import LoginForm from '../components/LoginForm/LoginForm';
+import './LoginPage.scss';
 
-
-const LoginPage = () => {
+export const LoginPage: React.FC = () => {
   return (
-    <div>LoginPage</div>
-  )
-}
+    <div className="login-page">
+      <div className="login-page__banner-section">
+        <LoginBanner />
+      </div>
+      <div className="login-page__form-section">
+        <LoginForm />
+      </div>
+    </div>
+  );
+};
 
-
-export default LoginPage
+export default LoginPage;

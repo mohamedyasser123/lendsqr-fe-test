@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import avatarImg from '@/assets/images/avatar.png';
 import logoImg from '@/assets/images/logo.png';
 import './Navbar.scss';
+import { useNavigate } from 'react-router-dom';
 
 // Custom icons
 const LendsqrLogo: React.FC = () => (
@@ -33,6 +34,7 @@ const ChevronDownIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 export const Navbar: React.FC = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
@@ -42,6 +44,10 @@ export const Navbar: React.FC = () => {
     e.preventDefault();
     console.log('Searching for:', searchQuery);
   };
+  const handleLogout = () => {
+  localStorage.removeItem("isAuthenticated");
+  navigate("/login");
+};
 
   return (
     <header className="navbar">
@@ -102,8 +108,16 @@ export const Navbar: React.FC = () => {
                   </li>
                   <li className="navbar__dropdown-divider"></li>
                   <li className="navbar__dropdown-item">
-                    <a href="#logout" className="navbar__dropdown-link navbar__dropdown-link--logout" onClick={() => setIsProfileDropdownOpen(false)}>Logout</a>
-                  </li>
+<button
+  type="button"
+  className="navbar__dropdown-link navbar__dropdown-link--logout"
+  onClick={() => {
+    setIsProfileDropdownOpen(false);
+    handleLogout();
+  }}
+>
+  Logout
+</button>                  </li>
                 </ul>
               </div>
             )}

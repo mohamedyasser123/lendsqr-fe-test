@@ -1,0 +1,52 @@
+@use "../../../../styles/abstracts/variables" as vars;
+@use "../../../../styles/abstracts/mixins" as mixins;
+
+.login-banner {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 60px;
+  width: 100%;
+  box-sizing: border-box;
+
+  &__logo-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  &__logo {
+    height: 36px;
+    width: auto;
+    display: block;
+  }
+
+  &__illustration-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__illustration {
+    max-width: 100%;
+    max-height: 70vh;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  @include mixins.respond-to(tablet) {
+    padding: 40px;
+    
+    &__illustration {
+      max-height: 55vh;
+    }
+  }
+
+  // Hide the banner completely on mobile
+  @include mixins.respond-to(mobile) {
+    display: none;
+  }
+}
