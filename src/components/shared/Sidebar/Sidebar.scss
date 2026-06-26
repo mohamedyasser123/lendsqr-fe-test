@@ -1,0 +1,329 @@
+@use "../../../styles/abstracts/variables" as vars;
+@use "../../../styles/abstracts/mixins" as mixins;
+
+.sidebar {
+  width: vars.$sidebar-width;
+  height: calc(100vh - #{vars.$navbar-height});
+  background-color: vars.$color-white;
+  border-right: 1px solid vars.$color-border;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: vars.$navbar-height;
+  left: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  z-index: 15;
+
+  // Custom scrollbar for sidebar container
+  &__container {
+    height: 100%;
+    overflow-y: auto;
+    padding-top: vars.$sidebar-padding-top;
+    padding-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(33, 51, 96, 0.08);
+      border-radius: 4px;
+      
+      &:hover {
+        background: rgba(33, 51, 96, 0.15);
+      }
+    }
+  }
+
+  // Organization switcher
+  &__org-switcher {
+    position: relative;
+    padding: 0 30px;
+    margin-bottom: 20px;
+  }
+
+  &__org-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: vars.$color-primary;
+    font-family: vars.$font-primary;
+    font-size: 16px;
+    font-weight: 400;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &--open {
+      opacity: 0.9;
+    }
+  }
+
+  &__org-icon {
+    width: 16px;
+    height: 16px;
+    color: vars.$color-primary;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  &__org-name {
+    flex-grow: 1;
+    text-align: left;
+    font-weight: 400;
+    font-size: 16px;
+    color: vars.$color-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 8px;
+  }
+
+  &__org-chevron {
+    width: 14px;
+    height: 14px;
+    color: vars.$color-primary;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+
+    &--rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__org-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 30px;
+    right: 30px;
+    background-color: vars.$color-white;
+    border: 1px solid vars.$color-border;
+    border-radius: 4px;
+    box-shadow: 0px 8px 24px rgba(33, 51, 96, 0.1);
+    z-index: 20;
+    padding: 6px 0;
+    list-style: none;
+    margin: 0;
+  }
+
+  &__org-dropdown-item {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__org-dropdown-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: vars.$font-primary;
+    font-size: 14px;
+    color: vars.$color-secondary;
+    text-align: left;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+      background-color: vars.$color-hover-bg;
+      color: vars.$color-primary;
+    }
+  }
+
+  &__org-dropdown-item-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 10px;
+    color: vars.$color-secondary;
+    opacity: 0.7;
+  }
+
+  // Navigation menu
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__dashboard-wrapper {
+    margin-bottom: 15px;
+  }
+
+  // Sections
+  &__section {
+    margin-top: 25px;
+    
+    &:first-of-type {
+      margin-top: 10px;
+    }
+  }
+
+  &__section-title {
+    font-family: vars.$font-secondary;
+    font-size: 12px;
+    font-weight: 500;
+    color: vars.$color-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0 30px;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+
+  &__section-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // Navigation Items
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 12px 30px;
+    color: vars.$color-secondary;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: vars.$font-primary;
+    font-weight: 400;
+    border-left: 5px solid transparent; // Reserve space for left border
+    transition: all 0.2s ease;
+    opacity: 0.85;
+
+    &:hover {
+      background-color: vars.$color-hover-bg;
+      color: vars.$color-primary;
+      opacity: 1;
+    }
+
+    &--active {
+      background-color: vars.$color-active-bg;
+      color: vars.$color-primary;
+      border-left-color: vars.$color-active;
+      font-weight: 400;
+      opacity: 1;
+
+      .sidebar__item-icon {
+        color: vars.$color-primary;
+        opacity: 1;
+      }
+    }
+  }
+
+  &__item-icon-container {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__item-icon {
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    transition: color 0.2s ease;
+  }
+
+  &__item-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Responsive Drawer Styles
+  @include mixins.respond-to(tablet) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: none;
+
+    &--open {
+      transform: translateX(0);
+      box-shadow: 8px 0px 32px rgba(33, 51, 96, 0.15);
+    }
+  }
+
+  // Mobile Toggle button
+  &__toggle-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 25;
+    position: fixed;
+    top: 36px; // Align vertically with header/navbar area
+    left: 20px;
+
+    @include mixins.respond-to(tablet) {
+      display: flex;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &-bar {
+      width: 24px;
+      height: 2px;
+      background-color: vars.$color-primary;
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: 2px 1px;
+    }
+
+    &--open {
+      .sidebar__toggle-btn-bar:nth-child(1) {
+        transform: rotate(45deg) translate(2px, 1px);
+      }
+
+      .sidebar__toggle-btn-bar:nth-child(2) {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      .sidebar__toggle-btn-bar:nth-child(3) {
+        transform: rotate(-45deg) translate(2px, -1px);
+      }
+    }
+  }
+
+  // Backdrop overlay for mobile
+  &__backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(33, 51, 96, 0.25);
+    backdrop-filter: blur(2px);
+    z-index: 14;
+    cursor: pointer;
+
+    @include mixins.respond-to(tablet) {
+      display: block;
+    }
+  }
+}
