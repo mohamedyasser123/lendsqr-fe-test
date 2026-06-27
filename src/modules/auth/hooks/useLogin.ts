@@ -6,7 +6,7 @@ export const useLogin = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = async (data: LoginFormData) => {
+  const login = async (_data: LoginFormData) => {
     try {
       setIsLoading(true);
 

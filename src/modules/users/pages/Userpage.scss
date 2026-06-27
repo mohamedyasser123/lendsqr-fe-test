@@ -1,0 +1,72 @@
+@use "../../../styles/abstracts/variables" as vars;
+@use "../../../styles/abstracts/mixins" as mixins;
+
+.users-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+
+  &__state-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(33, 51, 96, 0.04);
+    border: 1px dashed rgba(33, 51, 96, 0.15);
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+
+    @include mixins.respond-to(mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+  }
+
+  &__state-selector-label {
+    font-family: vars.$font-primary;
+    font-size: 14px;
+    font-weight: 600;
+    color: vars.$color-primary;
+  }
+
+  &__state-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__state-btn {
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 6px;
+    font-family: vars.$font-primary;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: vars.$color-white;
+    border: 1px solid rgba(33, 51, 96, 0.15);
+    color: vars.$color-secondary;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(33, 51, 96, 0.06);
+      color: vars.$color-primary;
+    }
+
+    &--active {
+      background-color: vars.$color-active;
+      border-color: vars.$color-active;
+      color: vars.$color-white;
+      font-weight: 600;
+
+      &:hover {
+        background-color: vars.$color-active;
+        color: vars.$color-white;
+      }
+    }
+  }
+}
