@@ -1,0 +1,103 @@
+@use "../../../styles/abstracts/variables" as vars;
+@use "../../../styles/abstracts/mixins" as mixins;
+
+.users-stats-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+  width: 100%;
+  margin-bottom: 40px;
+
+  @include mixins.respond-to(tablet) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @include mixins.respond-to(mobile) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 25px;
+  }
+}
+
+.users-stat-card {
+  background-color: vars.$color-white;
+  border: 1px solid rgba(33, 51, 96, 0.06);
+  box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 3px 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  &--active {
+    border: 2px solid vars.$color-active;
+  }
+
+  &__icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+
+    &--pink {
+      background-color: rgba(223, 24, 255, 0.1);
+      svg {
+        stroke: #DF18FF;
+      }
+    }
+
+    &--purple {
+      background-color: rgba(87, 24, 255, 0.1);
+      svg {
+        stroke: #5718FF;
+      }
+    }
+
+    &--orange {
+      background-color: rgba(245, 95, 68, 0.1);
+      svg {
+        stroke: #F55F44;
+      }
+    }
+
+    &--red {
+      background-color: rgba(255, 51, 102, 0.1);
+      svg {
+        stroke: #FF3366;
+      }
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  &__label {
+    font-family: vars.$font-secondary;
+    font-size: 12px;
+    font-weight: 500;
+    color: vars.$color-secondary;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  &__count {
+    font-family: vars.$font-primary;
+    font-size: 24px;
+    font-weight: 600;
+    color: vars.$color-primary;
+    line-height: 1.2;
+  }
+}
