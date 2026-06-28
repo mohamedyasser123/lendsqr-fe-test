@@ -33,11 +33,17 @@ export const Pagination: React.FC<PaginationProps> = ({
   onLimitChange,
 }) => {
   return (
-    <div className="pagination">
+    <nav className="pagination" aria-label="Pagination navigation">
       <div className="pagination__left">
-        <span className="pagination__showing-text">Showing</span>
+        <span className="pagination__showing-text" id="pagination-showing-label">Showing</span>
         <div className="pagination__select-wrapper">
-          <select className="pagination__select" value={limit} onChange={(e) => onLimitChange(Number(e.target.value))}>
+          <select
+            className="pagination__select"
+            value={limit}
+            onChange={(e) => onLimitChange(Number(e.target.value))}
+            aria-label="Rows per page"
+            aria-labelledby="pagination-showing-label"
+          >
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="50">50</option>
@@ -49,15 +55,19 @@ export const Pagination: React.FC<PaginationProps> = ({
       </div>
 
       <div className="pagination__right">
-        <button type="button" className="pagination__btn pagination__btn--prev" aria-label="Previous page"
-         disabled={page === 1}
-  onClick={() => onPageChange(page - 1)}>
+        <button
+          type="button"
+          className="pagination__btn pagination__btn--prev"
+          aria-label="Go to previous page"
+          disabled={page === 1}
+          onClick={() => onPageChange(page - 1)}
+        >
           <ChevronLeftIcon />
         </button>
 
         {getPages(page, totalPages).map((item, index) =>
           item === '...' ? (
-            <span key={`ellipsis-${index}`} className="pagination__ellipsis">
+            <span key={`ellipsis-${index}`} className="pagination__ellipsis" aria-hidden="true">
               ...
             </span>
           ) : (
@@ -68,18 +78,24 @@ export const Pagination: React.FC<PaginationProps> = ({
                 page === item ? 'pagination__page--active' : ''
               }`}
               onClick={() => onPageChange(item as number)}
+              aria-label={`Go to page ${item}`}
+              aria-current={page === item ? 'page' : undefined}
             >
               {item}
             </button>
           )
         )}
-        <button type="button" className="pagination__btn pagination__btn--next" aria-label="Next page"
-         disabled={page === totalPages}
-  onClick={() => onPageChange(page + 1)}>
+        <button
+          type="button"
+          className="pagination__btn pagination__btn--next"
+          aria-label="Go to next page"
+          disabled={page === totalPages}
+          onClick={() => onPageChange(page + 1)}
+        >
           <ChevronRightIcon />
         </button>
       </div>
-    </div>
+    </nav>
   );
 };
 

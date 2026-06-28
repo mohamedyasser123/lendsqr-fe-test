@@ -98,3 +98,23 @@ export const CalendarIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <line x1="3" y1="10" x2="21" y2="10"></line>
   </svg>
 );
+
+export const StarFilledIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#E9B200" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+  </svg>
+);
+
+export const StarEmptyIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E9B200" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+  </svg>
+);
+
+export const ArrowLeftIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <line x1="19" y1="12" x2="5" y2="12"></line>
+    <polyline points="12 19 5 12 12 5"></polyline>
+  </svg>
+);
+

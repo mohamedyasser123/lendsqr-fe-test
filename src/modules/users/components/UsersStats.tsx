@@ -15,6 +15,39 @@ export interface StatCardProps {
   colorClass: string;
 }
 
+
+// Module-level constant — no re-creation on each render
+const STATS_DATA = [
+  {
+    icon: CardUsersIcon,
+    label: 'Users',
+    count: '2,453',
+    isActive: true,
+    colorClass: 'pink',
+  },
+  {
+    icon: CardActiveUsersIcon,
+    label: 'Active Users',
+    count: '2,453',
+    isActive: false,
+    colorClass: 'purple',
+  },
+  {
+    icon: CardLoansIcon,
+    label: 'Users with Loans',
+    count: '12,453',
+    isActive: false,
+    colorClass: 'orange',
+  },
+  {
+    icon: CardSavingsIcon,
+    label: 'Users with Savings',
+    count: '102,453',
+    isActive: false,
+    colorClass: 'red',
+  },
+];
+
 export const StatCard: React.FC<StatCardProps> = ({ 
   icon: Icon, 
   label, 
@@ -34,41 +67,10 @@ export const StatCard: React.FC<StatCardProps> = ({
 };
 
 export const UsersStats: React.FC = () => {
-  const statsData = [
-    {
-      icon: CardUsersIcon,
-      label: 'Users',
-      count: '2,453',
-      isActive: true, // As shown in Figma (card highlighted with blue border)
-      colorClass: 'pink',
-    },
-    {
-      icon: CardActiveUsersIcon,
-      label: 'Active Users',
-      count: '2,453',
-      isActive: false,
-      colorClass: 'purple',
-    },
-    {
-      icon: CardLoansIcon,
-      label: 'Users with Loans',
-      count: '12,453',
-      isActive: false,
-      colorClass: 'orange',
-    },
-    {
-      icon: CardSavingsIcon,
-      label: 'Users with Savings',
-      count: '102,453',
-      isActive: false,
-      colorClass: 'red',
-    },
-  ];
-
   return (
-    <div className="users-stats-container">
-      {statsData.map((stat, index) => (
-        <StatCard key={index} {...stat} />
+    <div className="users-stats-container" role="region" aria-label="User statistics">
+      {STATS_DATA.map((stat) => (
+        <StatCard key={stat.label} {...stat} />
       ))}
     </div>
   );

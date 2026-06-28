@@ -3,18 +3,18 @@ export interface User {
   organization: string;
   username: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber: number | string;
   createdAt: string;
   status: "Active" | "Inactive" | "Pending" | "Blacklisted";
 
   profile: {
     fullName: string;
-    phoneNumber: string;
+    phoneNumber: number | string;
     email: string;
-    bvn: string;
+    bvn: number | string;
     gender: string;
     maritalStatus: string;
-    children: string;
+    children: number | string;
     residenceType: string;
   };
 
@@ -24,8 +24,8 @@ export interface User {
     sector: string;
     duration: string;
     officeEmail: string;
-    monthlyIncome: string[];
-    loanRepayment: string;
+    monthlyIncome: number[];
+    loanRepayment: number | string;
   };
 
   socials: {
@@ -36,7 +36,7 @@ export interface User {
 
   guarantor: {
     fullName: string;
-    phoneNumber: string;
+    phoneNumber: number | string;
     email: string;
     relationship: string;
   };

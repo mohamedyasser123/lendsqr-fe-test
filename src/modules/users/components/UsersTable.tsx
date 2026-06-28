@@ -1,17 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { FilterIcon, ThreeDotsIcon } from './icons';
 import FilterDropdown from './FilterDropdown';
 import TableActionsMenu from './TableActionsMenu';
 import './UsersTable.scss';
 import type { User } from "../types/user.types";
 import { useNavigate } from 'react-router-dom';
-// TypeScript Types
 
+// Module-level constants — no re-creation on each render
+const SKELETON_ROW_INDICES = Array.from({ length: 6 }, (_, i) => i);
 
+const TABLE_HEADERS = [
+  'Organization',
+  'Username',
+  'Email',
+  'Phone Number',
+  'Date Joined',
+  'Status',
+];
+
+const getStatusClass = (status: string): string => {
+  switch (status) {
+    case 'Active':      return 'users-table__status--active';
+    case 'Inactive':    return 'users-table__status--inactive';
+    case 'Pending':     return 'users-table__status--pending';
+    case 'Blacklisted': return 'users-table__status--blacklisted';
+    default:            return '';
+  }
+};
 
 export interface UsersTableProps {
   state: 'default' | 'loading' | 'empty' | 'error';
   users: User[];
+    filters: {
+    organization: string;
+    username: string;
+    email: string;
+    phoneNumber: string;
+    status: string;
+    date: string;
+  };
+
+  onFilterChange: (key: string, value: string) => void;
+  onApplyFilters: () => void;
+  onResetFilters: () => void;
+  onRetry?: () => void;
 }
 
 interface HeaderCellProps {
@@ -19,14 +51,22 @@ interface HeaderCellProps {
   index: number;
   activeFilterIndex: number | null;
   setActiveFilterIndex: (index: number | null) => void;
+   filters: UsersTableProps["filters"];
+  onFilterChange: UsersTableProps["onFilterChange"];
+  onApplyFilters: UsersTableProps["onApplyFilters"];
+  onResetFilters: UsersTableProps["onResetFilters"];
 }
 
 const TableHeaderCell: React.FC<HeaderCellProps> = ({ 
   label, 
   index, 
   activeFilterIndex, 
-  setActiveFilterIndex 
-}) => {
+  setActiveFilterIndex,
+  filters,
+  onFilterChange,
+  onApplyFilters,
+  onResetFilters,
+ }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isOpen = activeFilterIndex === index;
 
@@ -54,11 +94,20 @@ const TableHeaderCell: React.FC<HeaderCellProps> = ({
           className={`users-table__filter-btn ${isOpen ? 'users-table__filter-btn--active' : ''}`}
           onClick={toggleFilter}
           aria-label={`Filter by ${label}`}
+          aria-expanded={isOpen}
+          aria-haspopup="true"
         >
           <FilterIcon />
         </button>
-        {isOpen && <FilterDropdown onClose={() => setActiveFilterIndex(null)} />}
-      </div>
+{isOpen && (
+  <FilterDropdown
+    filters={filters}
+    onFilterChange={onFilterChange}
+    onApply={onApplyFilters}
+    onReset={onResetFilters}
+    onClose={() => setActiveFilterIndex(null)}
+  />
+)}      </div>
     </th>
   );
 };
@@ -66,7 +115,6 @@ const TableHeaderCell: React.FC<HeaderCellProps> = ({
 // Table Row Sub-component
 interface TableRowProps {
   user: User;
-  index: number;
   activeMenuRowId: string | null;
   setActiveMenuRowId: (id: string | null) => void;
 }
@@ -94,20 +142,6 @@ const navigate = useNavigate();
     return () => document.removeEventListener('click', handleOutsideClick);
   }, [isMenuOpen, setActiveMenuRowId]);
 
- const getStatusClass = (status: User["status"]) => {
-  switch (status) {
-    case "Active":
-      return "users-table__status--active";
-    case "Inactive":
-      return "users-table__status--inactive";
-    case "Pending":
-      return "users-table__status--pending";
-    case "Blacklisted":
-      return "users-table__status--blacklisted";
-    default:
-      return "";
-  }
-};
 
   return (
     <tr className="users-table__tr">
@@ -147,12 +181,15 @@ const navigate = useNavigate();
   );
 };
 
+// Wrap in memo — only re-renders when its own user/menu state changes,
+// not when other rows open/close their menus
+const TableRowMemo = memo(TableRow);
+
 // Skeleton Loader Sub-component
 const TableSkeleton: React.FC = () => {
-  const skeletonRows = Array.from({ length: 6 });
   return (
     <>
-      {skeletonRows.map((_, index) => (
+      {SKELETON_ROW_INDICES.map((index) => (
         <tr key={index} className="users-table__tr users-table__tr--skeleton">
           <td className="users-table__td"><div className="skeleton-bar" /></td>
           <td className="users-table__td"><div className="skeleton-bar" /></td>
@@ -168,32 +205,34 @@ const TableSkeleton: React.FC = () => {
 };
 
 // Main UsersTable Component
-export const UsersTable: React.FC<UsersTableProps> = ({ state, users }) => {
+export const UsersTable: React.FC<UsersTableProps> = ({ state, users, filters,
+  onFilterChange,
+  onApplyFilters,
+  onResetFilters,
+  onRetry,
+ }) => {
   const [activeFilterIndex, setActiveFilterIndex] = useState<number | null>(null);
   const [activeMenuRowId, setActiveMenuRowId] = useState<string | null>(null);
 
-  const headers = [
-    'Organization',
-    'Username',
-    'Email',
-    'Phone Number',
-    'Date Joined',
-    'Status'
-  ];
 
   return (
     <div className="users-table-wrapper">
       <div className="users-table-container">
-        <table className="users-table">
+        <table className="users-table" role="table" aria-label="Users list">
           <thead className="users-table__thead">
             <tr className="users-table__header-tr">
-              {headers.map((label, idx) => (
+              {TABLE_HEADERS.map((label, idx) => (
                 <TableHeaderCell 
                   key={label}
                   label={label}
                   index={idx}
                   activeFilterIndex={activeFilterIndex}
                   setActiveFilterIndex={setActiveFilterIndex}
+                   filters={filters}
+  onFilterChange={onFilterChange}
+  onApplyFilters={onApplyFilters}
+  onResetFilters={onResetFilters}
+                  
                 />
               ))}
               <th className="users-table__th users-table__th--action"></th>
@@ -202,11 +241,10 @@ export const UsersTable: React.FC<UsersTableProps> = ({ state, users }) => {
           <tbody className="users-table__tbody">
             {state === 'loading' && <TableSkeleton />}
 
-            {state === 'default' && users.map((user, idx) => (
-              <TableRow 
+            {state === 'default' && users.map((user) => (
+            <TableRowMemo 
                 key={user.id}
                 user={user}
-                index={idx}
                 activeMenuRowId={activeMenuRowId}
                 setActiveMenuRowId={setActiveMenuRowId}
               />
@@ -235,7 +273,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ state, users }) => {
                     </svg>
                     <h3 className="error-state-title">Failed to Load Users</h3>
                     <p className="error-state-text">An error occurred while fetching the users list from the server. Please check your internet connection and try again.</p>
-                    <button type="button" className="error-state-btn" onClick={() => console.log('Retrying users fetch...')}>
+                    <button type="button" className="error-state-btn" onClick={() => onRetry?.()}>
                       Try Again
                     </button>
                   </div>

@@ -14,6 +14,19 @@
   z-index: 50;
   cursor: default;
 
+  // On tablet and smaller, anchor to the right edge to prevent overflow
+  @include mixins.respond-to(tablet) {
+    left: auto;
+    right: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  // On mobile, fill a larger portion of the viewport width
+  @include mixins.respond-to(mobile) {
+    width: min(270px, 90vw);
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
