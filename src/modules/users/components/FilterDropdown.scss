@@ -1,0 +1,125 @@
+@use "../../../styles/abstracts/variables" as vars;
+@use "../../../styles/abstracts/mixins" as mixins;
+
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 270px;
+  background-color: vars.$color-white;
+  border: 1px solid rgba(84, 95, 125, 0.14);
+  box-shadow: 3px 5px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  padding: 30px 20px;
+  z-index: 50;
+  cursor: default;
+
+  // On tablet and smaller, anchor to the right edge to prevent overflow
+  @include mixins.respond-to(tablet) {
+    left: auto;
+    right: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  // On mobile, fill a larger portion of the viewport width
+  @include mixins.respond-to(mobile) {
+    width: min(270px, 90vw);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__label {
+    font-family: vars.$font-primary;
+    font-size: 14px;
+    font-weight: 500;
+    color: vars.$color-secondary;
+  }
+
+  &__input,
+  &__select,
+  &__input-date {
+    width: 100%;
+    height: 40px;
+    background-color: vars.$color-white;
+    border: 1px solid rgba(33, 51, 96, 0.15);
+    border-radius: 8px;
+    padding: 0 16px;
+    font-family: vars.$font-primary;
+    font-size: 14px;
+    color: vars.$color-primary;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: vars.$color-secondary;
+      opacity: 0.5;
+    }
+
+    &:focus {
+      border-color: vars.$color-active;
+    }
+  }
+
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23545F7D' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 32px;
+  }
+
+  &__input-date {
+    padding-right: 12px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 10px;
+  }
+
+  &__btn {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    font-family: vars.$font-primary;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+
+    &--reset {
+      background-color: transparent;
+      border: 1px solid vars.$color-secondary;
+      color: vars.$color-secondary;
+
+      &:hover {
+        background-color: vars.$color-hover-bg;
+      }
+    }
+
+    &--filter {
+      background-color: vars.$color-active;
+      border: none;
+      color: vars.$color-white;
+
+      &:hover {
+        background-color: darken(vars.$color-active, 5%);
+      }
+    }
+  }
+}
