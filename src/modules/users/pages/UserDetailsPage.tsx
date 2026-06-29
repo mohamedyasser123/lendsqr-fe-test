@@ -32,7 +32,13 @@ const UserDetailsPage: React.FC = () => {
           <div style={{ height: '28px', width: '200px', ...SKELETON_STYLE }} />
         </div>
         <div className="user-summary-card" style={{ minHeight: '200px', display: 'flex', alignItems: 'center', padding: '30px' }}>
-          <div style={{ width: '100px', height: '100px', borderRadius: '50%', ...SKELETON_STYLE, flexShrink: 0 }} />
+          <div   style={{
+            ...SKELETON_STYLE,
+            width: "100px",
+            height: "100px",
+            borderRadius: "50%",
+            flexShrink: 0,
+          }} />
           <div style={{ marginLeft: '20px', flexGrow: 1 }}>
             <div style={{ height: '24px', width: '150px', ...SKELETON_STYLE, marginBottom: '12px' }} />
             <div style={{ height: '16px', width: '100px', ...SKELETON_STYLE }} />
