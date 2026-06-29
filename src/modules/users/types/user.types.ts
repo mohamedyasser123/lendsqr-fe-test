@@ -11,6 +11,7 @@ export interface User {
     fullName: string;
     phoneNumber: number | string;
     email: string;
+    avatar?: string;
     bvn: number | string;
     gender: string;
     maritalStatus: string;
