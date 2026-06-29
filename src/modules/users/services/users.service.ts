@@ -1,7 +1,5 @@
 
-import { api } from "@/api/axios";
 import type { User } from "../types/user.types";
-import { ENDPOINTS } from "@/api/endpoints";
 
 export interface GetUsersParams {
   page: number;
