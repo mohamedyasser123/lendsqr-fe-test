@@ -29,9 +29,14 @@ export interface UsersResponse {
  * Fetches all users from the server once.
  * Cached separately so filter/pagination changes never re-download the full list.
  */
+import axios from "axios";
+
+const DATA_URL =
+  "https://cdn.jsdelivr.net/gh/mohamedyasser123/lendsqr-mock-api@main/db.json";
+
 export const getAllUsers = async (): Promise<User[]> => {
-  const { data } = await api.get<User[]>(ENDPOINTS.USERS);
-  return data;
+  const { data } = await axios.get<{ users: User[] }>(DATA_URL);
+  return data.users;
 };
 
 /**
@@ -95,6 +100,13 @@ export const filterAndPaginateUsers = (
 };
 
 export const getUserById = async (id: string): Promise<User> => {
-  const { data } = await api.get(`${ENDPOINTS.USERS}/${id}`);
-  return data;
-};
+  const users = await getAllUsers();
+
+  const user = users.find((u) => u.id === id);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
+};
