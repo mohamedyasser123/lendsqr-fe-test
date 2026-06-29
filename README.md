@@ -1,75 +1,198 @@
-# React + TypeScript + Vite
+# Lendsqr Frontend Assessment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React + TypeScript implementation of the **Lendsqr Frontend Assessment**, built with a focus on clean architecture, scalability, performance, accessibility, and responsive design.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Application:** https://mohamed-yasser-lendsqr-fe-test.vercel.app/login
 
-## React Compiler
+## Repository
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**GitHub:** https://github.com/mohamedyasser123/lendsqr-fe-test
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Authentication
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+* Login page
+* Form validation
+* Protected routes
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Dashboard
 
+* Responsive dashboard layout
+* Sidebar navigation
+* Header with user profile
+
+### Users
+
+* Fetch users from Mock API (500 records)
+* Server-side pagination
+* Search users
+* Filter by:
+
+  * Organization
+  * Username
+  * Email
+  * Phone Number
+  * Status
+  * Date
+* User actions menu
+* Loading state
+* Empty state
+* Error state
+
+### User Details
+
+* Dynamic user details page
+* User information sections
+* React Query data fetching
+* User data persistence using LocalStorage
+* Cached data displayed instantly before API response
+* Responsive layout
+
+---
+
+# Tech Stack
+
+* React
+* TypeScript
+* Vite
+* SCSS
+* React Router DOM
+* TanStack React Query
+* Axios
+* Vitest
+* React Testing Library
+
+---
+
+# Project Structure
+
+```text
+src/
+│
+├── api/
+├── assets/
+├── components/
+├── layouts/
+├── modules/
+│   ├── auth/
+│   └── users/
+│       ├── components/
+│       ├── hooks/
+│       ├── pages/
+│       ├── services/
+│       └── types/
+│
+├── routes/
+├── styles/
+└── utils/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Clone the repository
 
+```bash
+git clone https://github.com/your-username/lendsqr-fe-test.git
 ```
+
+Go into the project
+
+```bash
+cd lendsqr-fe-test
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run development server
+
+```bash
+npm run dev
+```
+
+---
+
+# Build
+
+```bash
+npm run build
+```
+
+---
+
+# Run Tests
+
+```bash
+npm test
+```
+
+or
+
+```bash
+npm run coverage
+```
+
+---
+
+# Testing
+
+The project includes unit tests covering:
+
+* Users Table
+* Filter Dropdown
+* Pagination
+* User Details Page
+* Login Form
+
+Current Result:
+
+* 22 Tests Passing
+* 5 Test Suites Passing
+
+---
+
+# Performance
+
+* React Query caching
+* Server-side pagination
+* LocalStorage caching for User Details
+* Optimized component rendering
+* Feature-based folder structure
+
+---
+
+# Accessibility
+
+* Semantic HTML
+* Keyboard accessible controls
+* Proper labels for form inputs
+* ARIA attributes where appropriate
+
+---
+
+# Responsive Design
+
+The application is fully responsive for:
+
+* Mobile
+* Tablet
+* Desktop
+
+---
+
+# Notes
+
+* Mock API contains 500 generated users.
+* User details are cached in LocalStorage to provide instant loading on subsequent visits.
+* Error, loading, and empty states are handled throughout the application.
+* The project follows a feature-based architecture to improve maintainability and scalability.

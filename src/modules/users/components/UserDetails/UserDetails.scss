@@ -468,3 +468,62 @@
     word-break: break-word;
   }
 }
+
+// ============================================================
+// Skeleton Loading Animation
+// ============================================================
+
+@keyframes skeleton-loading {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+// ============================================================
+// Error & Empty State
+// ============================================================
+
+.error-state-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  max-width: 480px;
+}
+
+.error-state-icon {
+  flex-shrink: 0;
+}
+
+.error-state-title {
+  font-family: vars.$font-primary;
+  font-size: 18px;
+  font-weight: 500;
+  color: vars.$color-primary;
+  margin: 0;
+}
+
+.error-state-text {
+  font-family: vars.$font-primary;
+  font-size: 14px;
+  color: vars.$color-secondary;
+  margin: 0;
+}
+
+.error-state-btn {
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-family: vars.$font-primary;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: vars.$color-active;
+  color: vars.$color-white;
+  border: none;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
